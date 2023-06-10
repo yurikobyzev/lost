@@ -1,0 +1,6 @@
+train: small_data/train/images
+val: small_data/val/images
+test: small_data/test/images
+
+nc: 7
+names: ['person_water', 'person_water_vest', 'person_boat', 'person_boat_vest', 'boat', 'barrier', 'shark']
