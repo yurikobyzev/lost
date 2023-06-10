@@ -20,7 +20,7 @@ from utils.torch_utils import select_device, smart_inference_mode
 import yaml
 
 class Quadro:
-    def __init__(self,cfg_yaml_path: str='quadro.yaml'):
+    def __init__(self,cfg_yaml_path: str='lost.yaml'):
         with open(cfg_yaml_path, errors='ignore') as f:
              opt = yaml.safe_load(f)
              print(opt)
