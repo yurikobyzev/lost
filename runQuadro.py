@@ -48,7 +48,7 @@ class QuadroCopter(Quadro):
 
 
 def main():
-    q=QuadroCopter('lost.yaml')
+    q=QuadroCopter('/yolov5/lost.yaml')
     q.get_source()
     q.set_savedir()
     q.load_model()
