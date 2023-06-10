@@ -1,10 +1,12 @@
 import sys
 from pathlib import Path
 import random
+import os
 
 import numpy
 from Quadro import Quadro
 import pandas as pd
+import torch
 
 random.seed(41)
 
@@ -23,16 +25,24 @@ class QuadroCopter(Quadro):
        yc = xywh[1]
        w = xywh[2]
        h = xywh[3]
-       image_id = txtpath
-
+       score=conf.cpu().detach().numpy().tolist()
+       label=cls.cpu().detach().numpy().tolist()
+       label=int(label)
+       image_id = os.path.basename(txt_path)
+       xc = round(xc*10000)/10000
+       yc = round(yc*10000)/10000
+       w = round(w*100000)/10000
+       h = round(h*10000)/10000
+       score = round(score*10000)/10000
+       print(xc,yc,w,h,image_id,label,score)
        result = {
           'image_id': image_id,
-          'xc': round(xc, 4),
-          'yc': round(yc, 4),
-          'w': round(w, 4),
-          'h': round(h, 4),
-          'label': 0,
-          'score': round(conf, 4)
+          'xc': xc,
+          'yc': yc,
+          'w': w,
+          'h': h,
+          'label': label,
+          'score': score
        }
        self.results.append(result)
 
@@ -46,7 +56,6 @@ def main():
     q.run_inference()
     test_df = pd.DataFrame(q.results, columns=['image_id', 'xc', 'yc', 'w', 'h', 'label', 'score'])
     test_df.to_csv(SAVE_PATH, index=False)
-
 
 if __name__ == '__main__':
     main()
